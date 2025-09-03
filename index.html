@@ -1,0 +1,664 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Ahmad Al Wazani | Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+  <!-- Small helpers + tabs + Section 1 upgrades -->
+  <style>
+    .video-caption{margin:.5rem 0 0;opacity:.8;font-size:.95rem;text-align:center}
+
+    .button.btn-with-thumb{
+      display:inline-flex; align-items:center; gap:.6rem;
+      padding-left:12px; padding-right:14px;
+    }
+    .btn-thumb{
+      width:34px; height:22px; object-fit:cover;
+      border-radius:4px; box-shadow:0 0 0 2px rgba(39,211,238,.6) inset;
+    }
+
+    /* Subhead styling */
+    .subhead{
+      margin:1rem 0 .5rem;
+      font-weight:800;
+      letter-spacing:.02em;
+      color:inherit;
+      font-size:1.25rem;
+      text-align:center;
+      text-transform:uppercase;
+    }
+
+    /* ===== Decisions list (left aligned, tidy) ===== */
+    .decision-list{
+      list-style:none;
+      padding:0;
+      margin:.25rem 0 1.1rem;
+      text-align:left;
+    }
+    .decision-list li{
+      display:grid;
+      grid-template-columns: 0.9rem 9.5ch 1fr; /* bullet | label | text */
+      column-gap:.5rem;
+      align-items:start;
+      margin:.35rem 0;
+      line-height:1.55;
+      text-align:left;
+    }
+    .decision-list .dot{
+      text-align:center; line-height:1;
+      transform:translateY(.12rem);
+      font-size:1.05rem;
+    }
+    .decision-list .dl-label{ font-weight:700; }
+    .decision-list .dl-label,
+    .decision-list .dl-text{ text-align:left; }
+    @media (max-width:600px){
+      .decision-list li{ grid-template-columns:0.9rem 8.5ch 1fr; }
+    }
+
+    .erd-lead{
+      text-align:center; margin:0.75rem 0 0.25rem;
+      opacity:.9; font-size:1.02rem;
+    }
+
+    /* ===== Section 3 gallery ===== */
+    .gallery-2{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:1rem;
+      margin:.75rem auto 1rem;
+      max-width:980px;
+    }
+    .gallery-2 img{
+      width:100%; height:auto; border-radius:10px;
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
+    }
+
+    /* ===== Stack posts (single column like Section 1) ===== */
+    #main .posts{
+      display:grid !important;
+      grid-template-columns: 1fr !important;
+      row-gap: 0 !important;
+      position: relative;
+    }
+    #main .posts > article{
+      width:100% !important;
+      max-width:980px !important;
+      margin:0 auto 3.25rem !important;
+      position:relative;
+      border-left: 0 !important;
+      box-shadow: none !important;
+    }
+    #main .posts:before,
+    #main .posts:after,
+    #main .posts > article:before,
+    #main .posts > article:after{
+      content:none !important;
+      display:none !important;
+      border:0 !important;
+      background:none !important;
+      box-shadow:none !important;
+    }
+
+    /* --- Divider before Section 3 --- */
+    #section-3{ position:relative; }
+    #section-3::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      top:-34px;
+      width:min(980px, 100%);
+      height:2px;
+      background:linear-gradient(
+        90deg,
+        rgba(39,211,238,0) 0%,
+        rgba(39,211,238,.55) 20%,
+        rgba(39,211,238,.9) 50%,
+        rgba(39,211,238,.55) 80%,
+        rgba(39,211,238,0) 100%
+      );
+      border-radius:2px;
+      pointer-events:none;
+    }
+    @media (max-width:1080px){
+      #main .posts > article{ margin:0 auto 2.75rem !important; }
+      #section-3::before{ top:-28px; }
+    }
+
+    /* ===== Code block ===== */
+    .code-block{
+      background:#0f1f33;
+      color:#e6eef9;
+      border:1px solid rgba(39,211,238,.35);
+      border-radius:10px;
+      padding:14px 16px;
+      font:14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      overflow:auto;
+      box-shadow:0 10px 22px rgba(0,0,0,.08);
+      margin:0.5rem 0 1rem;
+    }
+
+    /* ===== Details summary ===== */
+    details.summary-card{
+      border:1px solid rgba(39,211,238,.35);
+      border-radius:10px;
+      padding:0.6rem 0.9rem;
+      background:#0f1f330a;
+      box-shadow:0 6px 16px rgba(0,0,0,.06);
+      margin:0.75rem 0 1rem;
+    }
+    details.summary-card > summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+    details.summary-card > summary::-webkit-details-marker{display:none;}
+    details.summary-card[open]{background:#0f1f3312;}
+    details .downloads{margin:.5rem 0 .25rem; display:flex; gap:.5rem; flex-wrap:wrap;}
+
+    /* === ERD lightbox === */
+    .erd_img{
+      max-width:min(980px,100%);
+      width:100%;
+      height:auto;
+      border-radius:10px;
+      box-shadow:0 10px 22px rgba(0,0,0,.12);
+      cursor:zoom-in;
+      background:transparent;
+    }
+    .erd-modal{
+      display:none;
+      position:fixed; inset:0; z-index:9999;
+      place-items:center;
+      background:rgba(0,0,0,.55);
+    }
+    .erd-modal[open]{ display:grid; }
+    .erd-modal_image{
+      width:min(1100px,92vw);
+      height:auto;
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,.6);
+    }
+    .erd-modal_close{
+      position:fixed; top:14px; right:18px;
+      width:42px; height:42px; border-radius:50%;
+      border:0; background:#fff; color:#111; font-weight:700;
+      box-shadow:0 6px 16px rgba(0,0,0,.25);
+      cursor:pointer;
+    }
+
+    /* === Section 1: single authoritative spacing + remove overlay === */
+    #section-1 header.major{ margin-bottom: 1.75rem !important; }
+    #section-1 .image.main{ margin-top: 2.25rem !important; }
+    #section-1 .image.main:before,
+    #section-1 .image.main:after,
+    #section-1.post.featured .image.main:before,
+    #section-1.post.featured .image.main:after{ content:none !important; background:none !important; }
+
+    /* === Section 1: premium hero video styling === */
+    #section-1 .hero-video{
+      margin-top: 1.25rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 16px 28px rgba(0,0,0,.12);
+    }
+    #section-1 .hero-video video{
+      display:block;
+      width:100%;
+      height:auto;
+      aspect-ratio:16/9;
+      background:#0f1f33;
+    }
+    #section-1 .subhead{ margin-top: 1.1rem; }
+
+    /* ===== TAB BEHAVIOR (HTML/CSS only) =====
+       Only one project visible at a time using :target.
+       Default view: Section 1. */
+    article[id^="section-"]{ display:none; }
+    #section-1{ display:block; }
+    article[id^="section-"]:target{ display:block; }
+
+    /* ==== NEW: make Section-2 ERD wider (up to 1200px), centered ==== */
+    #section-2 .erd-wide{
+      width: min(1200px, 95vw);
+      margin: 0.75rem auto 1rem;
+      display: block;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    #section-2 .erd-wide svg{
+      width: 100%;
+      height: auto;
+    }
+
+    /* === Logo: exactly like the screenshot === */
+    #header .logo{
+      display:inline-flex; align-items:center; gap:1.15rem;
+      padding:.6rem 1.25rem;
+      border:6px solid rgba(255,255,255,.95);
+      border-radius:14px;
+      text-decoration:none;
+      color:inherit;
+      background:transparent;
+      box-shadow:0 2px 12px rgba(0,0,0,.10);
+    }
+    #header .logo .logo-main{
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:1.05rem; /* keep scale consistent with theme */
+    }
+    #header .logo .logo-tag{
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.85rem;
+      opacity:.95;
+      white-space:nowrap;
+    }
+    @media (max-width:720px){
+      #header .logo{ padding:.5rem 1rem; border-width:5px; gap:.8rem; }
+      #header .logo .logo-main{ letter-spacing:.10em; font-size:1rem; }
+      #header .logo .logo-tag{ display:none; } /* hides role on very small screens */
+    }
+  </style>
+</head>
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper" class="fade-in">
+
+    <!-- Intro -->
+    <div id="intro">
+      <h1>Ahmad Al Wazani</h1>
+      <p>Data &amp; Business Analyst | Power BI · SQL · ServiceNow
+      <br />
+      <a href="https://www.linkedin.com/in/ahmad-al-wazani/" target="_blank">LinkedIn</a> ·
+      <a href="https://github.com/" target="_blank">GitHub</a></p>
+      <ul class="actions">
+        <li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+      </ul>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+      <a href="index.html" class="logo" aria-label="Ahmad Al Wazani — Home">
+        <span class="logo-main">Ahmad Al Wazani</span>
+        <span class="logo-tag">Data &amp; Business Analyst</span>
+      </a>
+    </header>
+
+    <!-- Nav (Tabs) -->
+    <nav id="nav">
+      <ul class="links">
+        <li class="active"><a href="#section-1">PROJECT 1 • FITNESS KPI (SQL + POWER BI)</a></li>
+        <li><a href="#section-2">PROJECT 2 • DENMARK RETAIL (2023)</a></li>
+        <li><a href="#section-3">PROJECT 3 • SERVICENOW ROOM BOOKING</a></li>
+      </ul>
+      <ul class="icons">
+        <li><a href="https://www.linkedin.com/in/ahmad-al-wazani/" class="icon brands alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+        <li><a href="https://github.com/" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+
+      <!-- SECTION 1 -->
+      <article id="section-1" class="post featured">
+        <header class="major">
+          <h2><a href="#">Fitness Studio KPI Dashboard — SQL Integrated</a></h2>
+          <p>End-to-end analytics case study: SQL star schema + Power BI model with DAX. Tracks Total Revenue, Revenue per Client, Active Clients, Total Bookings, and Avg Class Occupancy with Top Trainers/Classes and Monthly trends (2024–2025).</p>
+        </header>
+
+        <!-- Hero: inline video, styled for clarity -->
+        <div class="image main hero-video">
+          <video controls preload="metadata" poster="images/fitness_dashboard.png">
+            <source src="assets/videos/fitness_dashboard_demo.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <p class="video-caption">
+          Dashboard focuses on revenue, bookings and class utilisation — built on a clean SQL star schema with robust DAX.
+        </p>
+
+        <h4 class="subhead">Decisions this dashboard enables</h4>
+        <ul class="decision-list">
+          <li>
+            <span class="dot" aria-hidden="true">•</span>
+            <span class="dl-label">Strategic:</span>
+            <span class="dl-text">focus time and capacity on the studios, classes, and trainers that create the most value.</span>
+          </li>
+          <li>
+            <span class="dot" aria-hidden="true">•</span>
+            <span class="dl-label">Commercial:</span>
+            <span class="dl-text">tighten discounts, adjust pricing, and rebalance class mix to protect margin.</span>
+          </li>
+          <li>
+            <span class="dot" aria-hidden="true">•</span>
+            <span class="dl-label">Operational:</span>
+            <span class="dl-text">track active clients, bookings, and occupancy; flag locations drifting from plan.</span>
+          </li>
+          <li>
+            <span class="dot" aria-hidden="true">•</span>
+            <span class="dl-label">Diagnostic:</span>
+            <span class="dl-text">slice by Studio, Class, and Trainer to explain variances and find opportunities.</span>
+          </li>
+        </ul>
+
+        <!-- DAX measures -->
+        <h4 class="subhead">Power BI — Core DAX Measures</h4>
+        <pre class="code-block"><code>Total Revenue = SUM(FactBookings[Revenue])
+
+Revenue per Client = DIVIDE([Total Revenue], DISTINCTCOUNT(DimClient[ClientID]))
+
+Active Clients = DISTINCTCOUNT(FactBookings[ClientID])
+
+Total Bookings = COUNTROWS(FactBookings)
+
+Avg Class Occupancy = 
+  AVERAGEX(
+    FactBookings,
+    DIVIDE(FactBookings[Attendees], RELATED(DimClass[Capacity]), 0)
+  )</code></pre>
+
+        <!-- How to use -->
+        <p><strong>How to use:</strong> scan KPIs → filter by Date/Studio/Class → drill into Trainers/Classes → compare month-over-month.</p>
+
+        <!-- Star schema description -->
+        <p class="erd-lead"><strong>SQL/Data Model (star schema):</strong> <em>FactBookings</em> with lookups to <em>DimDate</em>, <em>DimClient</em>, <em>DimTrainer</em>, <em>DimClass</em> and <em>DimStudio</em>. 1-to-many relationships (single direction). <em>DimDate</em> marked as the Date table.</p>
+
+        <!-- ERD preview + modal -->
+        <figure class="image" style="margin-top:0.5rem;">
+          <img id="erd-thumb" class="erd_img"
+               src="images/fitness_oltp_erd_980.png"
+               alt="Source OLTP ERD showing Payments, DimDate, Trainers, Sessions, Studios, Bookings, Clients and ClassTypes with keys and relationships"
+               loading="lazy" />
+          <figcaption class="video-caption">Click the diagram to view full-size.</figcaption>
+        </figure>
+
+        <!-- Accessible lightbox -->
+        <div id="erd-modal" class="erd-modal" aria-modal="true" role="dialog" aria-label="Full-size ERD">
+          <button id="erd-close" class="erd-modal_close" aria-label="Close ERD">&times;</button>
+          <img id="erd-full" class="erd-modal_image" src="images/fitness_oltp_erd_1960.png" alt="" />
+        </div>
+
+        <!-- Technical Appendix — SQL -->
+        <h4 class="subhead">Technical Appendix — SQL</h4>
+        <p class="video-caption">All data is synthetic/anonymised for portfolio purposes.</p>
+
+        <details class="summary-card">
+          <summary>Deploy database — <code>01_deploy_studiomanagement.sql</code></summary>
+          <div class="downloads">
+            <a class="button small" href="assets/sql/01_deploy_studiomanagement.sql" download>Download full SQL</a>
+          </div>
+          <pre class="code-block"><code>/* excerpt */
+CREATE DATABASE StudioManagementDB_New;
+GO
+
+USE StudioManagementDB_New;
+GO
+</code></pre>
+        </details>
+
+        <details class="summary-card">
+          <summary>Power BI views (star-friendly) — <code>02_bi_views_star.sql</code></summary>
+          <div class="downloads">
+            <a class="button small" href="assets/sql/02_bi_views_star.sql" download>Download full SQL</a>
+          </div>
+          <pre class="code-block"><code>/* excerpt */
+CREATE VIEW dbo.DimClient AS
+SELECT ClientID, Gender, JoinDate,
+       CASE WHEN IsActive=1 THEN 'Active' ELSE 'Inactive' END AS [Status]
+FROM dbo.Clients;
+
+CREATE VIEW dbo.FactBookings AS
+SELECT b.BookingID, b.ClientID, s.ClassTypeID AS ClassID, s.StudioID, s.TrainerID,
+       (YEAR(b.BookingDate)*10000)+(MONTH(b.BookingDate)*100)+DAY(b.BookingDate) AS BookingDateKey,
+       b.PriceAtBooking AS Price,
+       ISNULL((SELECT SUM(p.Amount)
+               FROM dbo.Payments p
+               WHERE p.BookingID=b.BookingID
+                 AND (p.Status IN ('Paid','Completed') OR p.Status IS NULL)),0.00) AS Revenue,
+       CASE WHEN b.Status='Completed' THEN 1 ELSE 0 END AS AttendanceFlag
+FROM dbo.Bookings b
+JOIN dbo.Sessions s ON s.SessionID=b.SessionID;
+</code></pre>
+        </details>
+
+        <details class="summary-card">
+          <summary>Data prep / business rules — <code>DataPrep_Add_Cancel_NoShow_2024.sql</code></summary>
+          <div class="downloads">
+            <a class="button small" href="assets/sql/DataPrep_Add_Cancel_NoShow_2024.sql" download>Download full SQL</a>
+          </div>
+          <pre class="code-block"><code>/* excerpt */
+-- Resets 2024 rows to idempotent baseline, then samples
+-- ~5% as Cancelled and ~2% as No-Show (on the remainder).
+UPDATE b
+SET    b.Status='Cancelled'
+FROM   dbo.Bookings AS b
+JOIN   #pick_cancel c ON c.BookingID=b.BookingID;
+</code></pre>
+        </details>
+
+        <details class="summary-card">
+          <summary>Daily KPI view — <code>v_KPI_Daily.sql</code></summary>
+          <div class="downloads">
+            <a class="button small" href="assets/sql/v_KPI_Daily.sql" download>Download full SQL</a>
+          </div>
+          <pre class="code-block"><code>/* excerpt */
+CREATE OR ALTER VIEW dbo.v_KPI_Daily AS
+WITH d AS ( SELECT [Date],[Year],MonthNumber,MonthName FROM dbo.DimDate ) ...
+SELECT d.[Date], d.[Year], d.MonthNumber, d.MonthName,
+       CAST(COALESCE(pb.TotalRevenue,0) AS DECIMAL(18,2)) AS TotalRevenue,
+       COALESCE(bb.TotalBookings,0) AS TotalBookings,
+       CAST(1.0 * COALESCE(sb.TotalAttendees,0) / NULLIF(COALESCE(sb.TotalCapacity,0),0) AS DECIMAL(8,4)) AS UtilizationRate
+FROM d
+LEFT JOIN PayBase pb  ON pb.[Date]=d.[Date]
+LEFT JOIN BookBase bb ON bb.[Date]=d.[Date]
+LEFT JOIN SessBase sb ON sb.[Date]=d.[Date];
+</code></pre>
+        </details>
+
+      </article>
+
+      <!-- Grid (Section 2 + 3) -->
+      <section class="posts">
+
+        <!-- SECTION 2 -->
+        <article id="section-2">
+          <header>
+            <h2><a href="#">Denmark Regional Retail — Sales &amp; Profit Dashboard (2023)</a></h2>
+          </header>
+
+          <div class="image fit"><video controls preload="metadata" style="width:100%;height:auto;" poster="images/regional_sales_dashboard.PNG"><source src="assets/videos/regional_retail_2023_demo.mp4" type="video/mp4" /></video></div>
+
+          <p><strong>Executive purpose:</strong> an executive-ready view of Denmark’s <em>regional retail</em> performance across Furniture, Technology and Office Supplies—showing where revenue and profit concentrate, how momentum shifts month-to-month, and which levers to prioritise next (price, mix, customer focus).</p>
+
+          <p><strong>What you see:</strong> KPI cards summarise health (Profit Margin&nbsp;%, Orders, Profit, Sales, Average Order Value). A bar by region and a city map highlight value and margin hot-spots. The monthly trend shows seasonality and momentum by region, and the treemap clarifies <em>product mix by revenue</em>.</p>
+
+          <p><strong>How to use it:</strong> scan KPIs → review Regions &amp; Map for hot-spots and risks → compare periods with the Month filter → validate drivers with Product Category and Customer Segment.</p>
+
+          <h4 class="subhead">Decisions this dashboard enables</h4>
+          <li><span class="dot" aria-hidden="true">•</span><span class="dl-label">Strategic:</span><span class="dl-text">focus time and capacity on the studios, classes, and trainers that create the most value.</span></li>
+          <li><span class="dot" aria-hidden="true">•</span><span class="dl-label">Commercial:</span><span class="dl-text">tighten discounts, adjust pricing, and rebalance class mix to protect margin.</span></li>
+          <li><span class="dot" aria-hidden="true">•</span><span class="dl-label">Operational:</span><span class="dl-text">track active clients, bookings, and occupancy; flag locations drifting from plan.</span></li>
+          <li><span class="dot" aria-hidden="true">•</span><span class="dl-label">Diagnostic:</span><span class="dl-text">slice by Customer Segment and Product Category to explain variances and size opportunities.</span></li>
+
+          <p class="erd-lead">
+            <strong>Reporting model (tech snapshot):</strong> compact star schema in Power BI—<em>FactSales</em> at the centre with lookups to <em>Date</em>, <em>Region</em>, <em>ProductCategory</em> and <em>CustomerSegment</em>. Date drives time intelligence; geo fields power the map.
+          </p>
+
+          <!-- ERD (now wider up to 1200px) -->
+          <figure class="image erd-wide">
+            <svg viewBox="0 0 980 380" role="img"
+                 aria-label="ERD: FactSales connected to Date, Region, ProductCategory, CustomerSegment"
+                 style="width:100%;height:auto;max-width:100%;">
+              <defs>
+                <style>
+                  .erd-box{fill:#0f1f33;stroke:#27d3ee;stroke-width:2;rx:12;ry:12}
+                  .erd-title{fill:#27d3ee;font:bold 16px system-ui,Segoe UI,Roboto,Arial}
+                  .erd-body{fill:#e6eef9;font:13px system-ui,Segoe UI,Roboto,Arial}
+                  .erd-line{stroke:#27d3ee;stroke-width:2}
+                  .erd-arrow{fill:#27d3ee}
+                </style>
+                <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                  <path class="erd-arrow" d="M0,0 L10,4 L0,8 Z"></path>
+                </marker>
+              </defs>
+
+              <!-- FactSales -->
+              <rect class="erd-box" x="400" y="150" width="180" height="110"></rect>
+              <text class="erd-title" x="490" y="172" text-anchor="middle">FactSales</text>
+              <text class="erd-body" x="410" y="192">• OrderDate</text>
+              <text class="erd-body" x="410" y="208">• Region</text>
+              <text class="erd-body" x="410" y="224">• ProductCategory</text>
+              <text class="erd-body" x="410" y="240">• CustomerSegment</text>
+              <text class="erd-body" x="410" y="256">• Sales, Profit (DKK)</text>
+
+              <!-- Date -->
+              <rect class="erd-box" x="90" y="40" width="200" height="100"></rect>
+              <text class="erd-title" x="190" y="62" text-anchor="middle">Date</text>
+              <text class="erd-body" x="100" y="82">• Date</text>
+              <text class="erd-body" x="100" y="98">• Year, Month, MonthName</text>
+              <text class="erd-body" x="100" y="114">• MonthYear</text>
+
+              <!-- Region -->
+              <rect class="erd-box" x="690" y="40" width="200" height="100"></rect>
+              <text class="erd-title" x="790" y="62" text-anchor="middle">Region</text>
+              <text class="erd-body" x="700" y="82">• RegionName</text>
+              <text class="erd-body" x="700" y="98">• City (for map)</text>
+              <text class="erd-body" x="700" y="114">• Country</text>
+
+              <!-- ProductCategory -->
+              <rect class="erd-box" x="90" y="240" width="200" height="100"></rect>
+              <text class="erd-title" x="190" y="262" text-anchor="middle">ProductCategory</text>
+              <text class="erd-body" x="100" y="282">• Category</text>
+              <text class="erd-body" x="100" y="298">• Subcategory</text>
+
+              <!-- CustomerSegment -->
+              <rect class="erd-box" x="690" y="240" width="200" height="100"></rect>
+              <text class="erd-title" x="790" y="262" text-anchor="middle">CustomerSegment</text>
+              <text class="erd-body" x="700" y="282">• Segment</text>
+              <text class="erd-body" x="700" y="298">• Persona</text>
+
+              <!-- Relationships -->
+              <line class="erd-line" x1="290" y1="90" x2="400" y2="180" marker-end="url(#arrow)"></line>
+              <line class="erd-line" x1="690" y1="90" x2="580" y2="180" marker-end="url(#arrow)"></line>
+              <line class="erd-line" x1="290" y1="290" x2="400" y2="220" marker-end="url(#arrow)"></line>
+              <line class="erd-line" x1="690" y1="290" x2="580" y2="220" marker-end="url(#arrow)"></line>
+            </svg>
+            <figcaption class="video-caption">Logical model: one-to-many relationships from dimensions into <strong>FactSales</strong>.</figcaption>
+          </figure>
+
+          <!-- CTAs -->
+          <ul class="actions special">
+            <li>
+              <a href="assets/pdf/Sales%20Profit.pdf" class="button btn-with-thumb" target="_blank" rel="noopener" title="Read the 2-page executive brief">
+                <img src="images/regional_sales_pdf_thumb.png" alt="" class="btn-thumb" loading="lazy" />
+                Read 2-Page Executive Brief (PDF)
+              </a>
+            </li>
+            <!-- Removed: Watch Video Demo button -->
+          </ul>
+        </article>
+
+        <!-- SECTION 3 -->
+        <article id="section-3">
+          <header>
+            <h2><a href="#">ServiceNow — Room Booking Automation</a></h2>
+          </header>
+
+          <!-- Hero shot -->
+          <a href="images/sn_objectives.png" class="image fit">
+            <img src="images/sn_objectives.png" alt="Business objectives for the room booking solution" loading="lazy" />
+          </a>
+
+          <p><strong>Business Objective:</strong> Automate the meeting-room booking process in ServiceNow so employees can self-serve. The flow checks availability and capacity, enforces booking rules, routes approvals when required, and sends instant confirmations while recording every action end-to-end for audit.</p>
+          <p><strong>Data model:</strong> normalized design with three tables — <em>Room</em>, <em>People</em>, and <em>Booking</em>. The Record Producer writes to <em>Booking</em> while referencing <em>Room</em> and <em>People</em> for validation and notifications.</p>
+          <p><strong>Automation:</strong> Flow Designer monitors <em>Booking</em> create/update (trigger) and sends a confirmation email (action) to the requester including room location and booking date. This keeps the process simple, reliable and scalable.</p>
+          <p class="video-caption">Screens below: ERD, then Flow Trigger &amp; Flow Action.</p>
+
+          <div class="gallery-2">
+            <img src="images/sn_data_model.png" alt="ERD — People, Room, Booking with relationships" loading="lazy" />
+            <img src="images/sn_flow_trigger.png" alt="Flow Trigger — record created/updated on Table.booking" loading="lazy" />
+            <img src="images/sn_flow_action.png" alt="Flow Action — Send Email confirmation based on trigger record data" loading="lazy" />
+          </div>
+
+          <ul class="actions special">
+            <li>
+              <a href="assets/pdf/Room%20Booking%20Automation_ServiceNow.pdf" class="button" target="_blank" rel="noopener">
+                Read the Implementation PDF
+              </a>
+            </li>
+          </ul>
+        </article>
+
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <section class="split contact">
+        <section class="alt">
+          <h3>Location</h3>
+          <p>Copenhagen, Denmark</p>
+        </section>
+        <section>
+          <h3>Mobile</h3>
+          <p><a href="#">+45 71510463</a></p>
+        </section>
+        <section>
+          <h3>Email</h3>
+          <p><a href="mailto:lid_wazni@live.co.uk">lid_wazni@live.co.uk</a></p>
+        </section>
+        <section>
+          <h3>Social</h3>
+          <ul class="icons alt">
+            <li><a href="https://www.linkedin.com/in/ahmad-al-wazani/" class="icon brands alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+            <li><a href="https://github.com/" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+          </ul>
+        </section>
+      </section>
+    </footer>
+
+    <div id="copyright">
+      <ul><li>&copy; Ahmad Al Wazani</li></ul>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/jquery.scrolly.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- ERD lightbox (tiny, no deps) -->
+  <script>
+    (function(){
+      const thumb = document.getElementById('erd-thumb');
+      const modal = document.getElementById('erd-modal');
+      const closeBtn = document.getElementById('erd-close');
+      if(!thumb || !modal) return;
+
+      function openModal(){ modal.setAttribute('open',''); }
+      function closeModal(){ modal.removeAttribute('open'); }
+
+      thumb.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+      document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+/* Fitness Studio KPI Measures (Power BI DAX)
+   Tables expected: Payments, Bookings, Sessions
+   Paste into Power BI (Model view > New measure) or Tabular Editor.
+*/
+
+-- 1) Total Revenue
+Total Revenue =
+SUM ( Payments[Amount] )
+
+-- 2) Active Clients
+Active Clients =
+DISTINCTCOUNT ( Bookings[ClientID] )
+
+-- 3) Revenue per Client
+Revenue per Client =
+DIVIDE ( [Total Revenue], [Active Clients] )
+
+-- 4) Total Bookings
+Total Bookings =
+COUNTROWS ( Bookings )
+
+-- 5) Avg Class Occupancy  (robust)
+Avg Class Occupancy =
+AVERAGEX (
+    VALUES ( Sessions[SessionID] ),
+    DIVIDE (
+        MAX ( Sessions[AttendeesCount] ),
+        MAX ( Sessions[MaxCapacity] )
+    )
+)
